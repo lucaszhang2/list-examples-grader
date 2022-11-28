@@ -13,7 +13,7 @@ then
     cp GradeServer.java student-submission
 else
     echo "ListExamples.java does not found. Check your submission. "
-    echo "You score is 0. "
+    echo "Your score is 0. "
     exit 1
 fi
 
@@ -22,14 +22,18 @@ cd student-submission
 set +e
 javac -cp ".;lib/hamcrest-core-1.3.jar;lib/junit-4.13.2.jar" *.java
 
-set -e
 if[[$? == 0]]
 then
-    java -cp ".;lib/hamcrest-core-1.3.jar;lib/junit-4.13.2.jar" org.junit.runner.JUnitCore TestListExamples > test-msg.txt
+    java -cp ".;lib/hamcrest-core-1.3.jar;lib/junit-4.13.2.jar" org.junit.runner.JUnitCore TestListExamples
+    if[[$? == 0]]
+        echo "Your score is 1. "
+        exit 1
+    else
+        echo "Your score is 0. Test not pass! "
+        exit 1
+    fi
 else
     echo "compiling error! "
     echo "You score is 0. "
     exit 1
 fi
-
-grep -iw "" test-mes.txt
